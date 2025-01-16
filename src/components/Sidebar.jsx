@@ -1,34 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 const Sidebar = ({ activeStep }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
   const stepperList = [
-    "Heading",
-    "Work History",
-    "Education",
-    "Skills",
-    "Summary",
-    "Finalize",
+    { label: "Heading", path: "/" },
+    { label: "Work History", path: "/work-history" },
+    { label: "Education", path: "/education" },
+    { label: "Skills", path: "/skills" },
+    { label: "Summary", path: "/summary" },
+    { label: "Finalize", path: "/finalize" },
   ];
 
   return (
-    <aside className="w-[20%] bg-[#092347] text-white p-6 h-screen">
-      <h2 className="text-xl font-semibold mb-6 mx-auto text-center">
-      Your<span className="text-[#FF3D3C]">CV</span>Info
-      </h2>
-      <ul className="space-y-4">
+    <aside className="sm:w-[20%] bg-[#092347] text-white sm:p-6 h-screen sm:h-screen fixed sm:relative top-0 left-0 sm:flex flex-col z-50">
+      {/* Mobile Header */}
+      <div className="flex justify-between items-center bg-[#092347] px-4 py-3">
+        <h2 className="text-lg font-semibold">
+          Your<span className="text-[#FF3D3C]">CV</span>Info
+        </h2>
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="sm:hidden text-white focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Menu */}
+      <ul
+        className={`space-y-4 sm:block ${
+          isMenuOpen ? "block" : "hidden"
+        } transition-all duration-300 bg-[#092347] sm:bg-transparent p-4 sm:p-0`}
+      >
         {stepperList.map((item, index) => (
           <li
             key={index}
-            className="hover:text-[#FF3D3C] cursor-pointer transition-colors duration-300 flex items-center gap-2 "
+            className="hover:text-[#FF3D3C] cursor-pointer transition-colors duration-300 flex items-center gap-2"
           >
             <div
-                className={`border-2 rounded-full px-2 py-1 text-[12px] font-bold ${
+              className={`border-2 rounded-full px-2 py-1 text-[12px] font-bold ${
                 activeStep === index ? "bg-yellow-600" : ""
-            }`}
+              }`}
             >
-            {index + 1}
+              {index + 1}
             </div>
-            {item}
+            {item.label}
           </li>
         ))}
       </ul>
