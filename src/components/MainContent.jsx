@@ -1,143 +1,171 @@
 import React from "react";
+import PicUpload from "../assets/upload-photo.jpg";
+import { useNavigate } from 'react-router-dom'
 
 const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
+
+    const navigate = useNavigate();
+
+    const handleNextClick = () => {
+        navigate('/work-history');
+        console.log("BTN CLICKED", navigate);
+        onNextStep();
+    };
+    
+    const handleBackClick = () => {
+        navigate('/work-history');
+        console.log("BTN CLICKED", navigate);
+        onNextStep();
+    }
+    
+
   return (
-    <main className="w-full bg-gray-100 h-screen">
-      <div className="mx-[5%] sm:mx-[15%] p-6 sm:p-12">
-        <div className="flex flex-col gap-[30px]">
-          <div className="w-full sm:w-[750px] flex">
-            <div>
-                
-            </div>
-            <h1 className="text-[#002D6B] text-2xl sm:text-4xl font-semibold font-merriweather">
+    <main className="w-full bg-gray-100 min-h-screen">
+      <div className="mx-4 sm:mx-10 md:mx-16 lg:mx-24 p-4 sm:p-6 md:p-12">
+        <div className="flex flex-col gap-6">
+          <div className="w-full sm:max-w-[750px]">
+            <h1 className="text-[#002D6B] text-xl sm:text-2xl md:text-4xl font-semibold font-merriweather">
               Personal Details
             </h1>
           </div>
           <div className="flex flex-col gap-5">
-            <div className="flex flex-wrap gap-[20px] sm:gap-[40px] gap-y-6">
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="firstName1" className="mb-2">
-                  First Name *
-                </label>
-                <input
-                  type="text"
-                  name="firstName1"
-                  id="firstName1"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
+            <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
+              <div className="flex flex-col items-center gap-3">
+                <img
+                  src={PicUpload}
+                  alt="Upload"
+                  className="object-cover w-[40px] h-[40px] sm:w-full sm:h-full"
                 />
+                <p className="text-blue-900 text-sm sm:text-base cursor-pointer underline font-semibold">
+                  Upload photo
+                </p>
               </div>
-
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="firstName2" className="mb-2">
-                  Last Name *
-                </label>
-                <input
-                  type="text"
-                  name="firstName2"
-                  id="firstName2"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
-                />
-              </div>
-
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="firstName3" className="mb-2">
-                  City
-                </label>
-                <input
-                  type="text"
-                  name="firstName3"
-                  id="firstName3"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
-                />
-              </div>
-
-              <div className="flex gap-[20px] sm:gap-[30px] w-full sm:w-auto">
-                <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[185px]">
-                  <label htmlFor="country" className="mb-2">
-                    Country
+              <div className="flex flex-wrap gap-4 sm:gap-6 gap-y-6 w-full sm:w-auto">
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="firstName1" className="mb-2">
+                    First Name *
                   </label>
                   <input
                     type="text"
-                    name="country"
-                    id="country"
-                    className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
+                    name="firstName1"
+                    id="firstName1"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
 
-                <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[185px]">
-                  <label htmlFor="pinCode" className="mb-2">
-                    Pin Code
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="firstName2" className="mb-2">
+                    Last Name *
                   </label>
                   <input
                     type="text"
-                    name="pinCode"
-                    id="pinCode"
-                    className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
+                    name="firstName2"
+                    id="firstName2"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
-              </div>
 
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="phone" className="mb-2">
-                  Phone *
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
-                />
-              </div>
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="city" className="mb-2">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                  />
+                </div>
 
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="email" className="mb-2">
-                  Email *
-                </label>
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
-                />
-              </div>
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[190px]">
+                    <label htmlFor="country" className="mb-2">
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      name="country"
+                      id="country"
+                      className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    />
+                  </div>
 
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="linkedin" className="mb-2">
-                  LinkedIn
-                </label>
-                <input
-                  type="text"
-                  name="linkedin"
-                  id="linkedin"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
-                />
-              </div>
+                  <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[190px]">
+                    <label htmlFor="pinCode" className="mb-2">
+                      Pin Code
+                    </label>
+                    <input
+                      type="text"
+                      name="pinCode"
+                      id="pinCode"
+                      className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    />
+                  </div>
+                </div>
 
-              <div className="flex flex-col text-[#002D6B] font-semibold text-[14px] sm:text-[16px] uppercase w-full sm:w-[400px]">
-                <label htmlFor="website" className="mb-2">
-                  Website
-                </label>
-                <input
-                  type="text"
-                  name="website"
-                  id="website"
-                  className="w-full border-[1px] border-[#002D6B] h-10 p-2 focus:outline-none focus:border-[#026A73] focus:border-2"
-                />
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="phone" className="mb-2">
+                    Phone *
+                  </label>
+                  <input
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                  />
+                </div>
+
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="email" className="mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                  />
+                </div>
+
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="linkedin" className="mb-2">
+                    LinkedIn
+                  </label>
+                  <input
+                    type="url"
+                    name="linkedin"
+                    id="linkedin"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                  />
+                </div>
+
+                <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
+                  <label htmlFor="website" className="mb-2">
+                    Website
+                  </label>
+                  <input
+                    type="url"
+                    name="website"
+                    id="website"
+                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex gap-[20px] sm:gap-[40px] justify-between sm:justify-end mt-[30px] flex-wrap">
-            <button
+
+          <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap">
+            {/* <button
               onClick={onPreviousStep}
               disabled={activeStep === 0}
-              className="font-bold text-md border-2 py-3 px-8 border-[#002D6B] text-[#002D6B] rounded-full hover:bg-[#002D6B] hover:text-white"
+              className="font-bold text-sm sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 border-[#002D6B] text-[#002D6B] rounded-full hover:bg-[#002D6B] hover:text-white transition"
             >
               Previous
-            </button>
+            </button> */}
             <button
-              onClick={onNextStep}
+              onClick={handleNextClick}
               disabled={activeStep === 5}
-              className="bg-[#026A73] font-bold text-md py-3 px-8 rounded-full text-white"
+              className="bg-[#026A73] font-bold text-sm sm:text-md py-2 px-6 sm:py-3 sm:px-8 rounded-full text-white hover:opacity-90 transition"
             >
               Next: Work history
             </button>

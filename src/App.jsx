@@ -1,10 +1,16 @@
-import { useState } from 'react'
-import './App.css'
-import Sidebar from './components/Sidebar'
-import MainContent from './components/MainContent'
+import React, {useState} from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+// import HeadingPage from "./HeadingPage";
+import WorkHistory from "./components/WorkHistory";
+import Education from "./components/Education";
+import Skills from "./components/Skills";
+import Summary from "./components/Summary";
+import Finalize from "./components/Finalize";
+import MainContent from "./components/MainContent";
 
-function App() {
-  // const [count, setCount] = useState(0)
+const App = () => {
+
   const [activeStep, setActiveStep] = useState(0); // Track the current active step
 
   // Function to move to the next step
@@ -14,6 +20,7 @@ function App() {
     }
   };
 
+  // Function to move to the previous step
   const handlePreviousStep = () => {
     if (activeStep > 0) {
       setActiveStep(activeStep - 1);
@@ -21,17 +28,31 @@ function App() {
   };
 
   return (
-    <>
+    <Router>
       <div className="flex">
-        <Sidebar activeStep={activeStep} />
-        <MainContent
-        activeStep={activeStep}
-        onNextStep={handleNextStep}
-        onPreviousStep={handlePreviousStep}
-        />
+        <Sidebar activeStep={activeStep}/>
+        <div className="flex-1">
+          <Routes>
+            <Route path="/" element={
+            <MainContent 
+              activeStep={activeStep}
+              onNextStep={handleNextStep}
+              onPreviousStep={handlePreviousStep}
+            />} />
+            <Route path="/work-history" element={<WorkHistory
+              activeStep={activeStep}
+              onNextStep={handleNextStep}
+              onPreviousStep={handlePreviousStep}
+            />} />
+            <Route path="/education" element={<Education />} />
+            <Route path="/skills" element={<Skills />} />
+            <Route path="/summary" element={<Summary />} />
+            <Route path="/finalize" element={<Finalize />} />
+          </Routes>
+        </div>
       </div>
-    </>
-  )
-}
+    </Router>
+  );
+};
 
-export default App
+export default App;
