@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const WorkHistory = ({ activeStep, onNextStep, onPreviousStep }) => {
   const navigate = useNavigate();
 
   const handleNextClick = () => {
-    navigate("/education");
-    console.log("BTN CLICKED", navigate);
-    onNextStep();
+    if (validateForm()) {
+      navigate("/education");
+      onNextStep();
+    }
   };
 
   const handleBackClick = () => {
@@ -16,9 +17,35 @@ const WorkHistory = ({ activeStep, onNextStep, onPreviousStep }) => {
     onNextStep();
   };
 
+  const [formData, setFormData] = useState({
+    jobTitle: "",
+    employer: ""
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!formData.jobTitle.trim()) {
+      newErrors.jobTitle = "Job title is required";
+    }
+    if (!formData.employer.trim()) {
+      newErrors.employer = "Employer is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
+
   return (
     <main className="w-full bg-gray-100 min-h-screen">
-      <div className="mx-4 sm:mx-10 md:mx-16 lg:mx-24 p-4 sm:p-6 md:p-12">
+      <div className="mx-4 sm:mx-10 md:mx-16 lg:mx-[350px] p-4 sm:p-6 md:p-12">
         <div className="flex flex-col gap-6">
           <div className="w-full sm:max-w-[900px]">
             <h1 className="text-[#002D6B] text-xl sm:text-2xl md:text-4xl font-semibold font-merriweather">
@@ -29,37 +56,48 @@ const WorkHistory = ({ activeStep, onNextStep, onPreviousStep }) => {
             <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
               <div className="flex flex-wrap gap-4 sm:gap-6 gap-y-6 w-full sm:w-full">
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-[15px] uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
-                  <label htmlFor="firstName1" className="mb-2">
+                  <label htmlFor="jobTitle" className="mb-2">
                     Job Title *
                   </label>
                   <input
                     type="text"
-                    name="firstName1"
-                    id="firstName1"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2"
+                    name="jobTitle"
+                    id="jobTitle"
+                    value={formData.jobTitle}
+                    onChange={handleInputChange}
+                    className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.jobTitle ? "border-red-500" : "border-[#002D6B]"}`}
                   />
+                  {errors.firstName && <p className="text-red-500 text-sm">{errors.jobTitle}</p>}
+                  {/* className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2" */}
+            
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-[15px] uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
-                  <label htmlFor="firstName2" className="mb-2">
+                  <label htmlFor="employer" className="mb-2">
                     Employer *
                   </label>
                   <input
                     type="text"
-                    name="firstName2"
-                    id="firstName2"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2"
+                    name="employer"
+                    id="employer"
+                    // className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2"
+                    value={formData.employer}
+                    onChange={handleInputChange}
+                    className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.employer ? "border-red-500" : "border-[#002D6B]"}`}
                   />
+                  {errors.firstName && <p className="text-red-500 text-sm">{errors.employer}</p>}
+
+
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-[15px] uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
-                  <label htmlFor="city" className="mb-2">
+                  <label htmlFor="location" className="mb-2">
                     Location
                   </label>
                   <input
                     type="text"
-                    name="city"
-                    id="city"
+                    name="location"
+                    id="location"
                     className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2"
                   />
                 </div>

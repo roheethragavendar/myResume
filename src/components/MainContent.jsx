@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PicUpload from "../assets/upload-photo.jpg";
 import { useNavigate } from 'react-router-dom'
 
@@ -7,9 +7,10 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
     const navigate = useNavigate();
 
     const handleNextClick = () => {
-        navigate('/work-history');
-        console.log("BTN CLICKED", navigate);
+      if (validateForm()) {
+        navigate("/work-history");
         onNextStep();
+      }
     };
     
     const handleBackClick = () => {
@@ -17,6 +18,44 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
         console.log("BTN CLICKED", navigate);
         onNextStep();
     }
+
+    const [formData, setFormData] = useState({
+      firstName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+      let newErrors = {};
+
+      if (!formData.firstName.trim()) {
+        newErrors.firstName = "First Name is required";
+      }
+      if (!formData.lastName.trim()) {
+        newErrors.lastName = "Last Name is required";
+      }
+      if (!formData.phone.trim()) {
+        newErrors.phone = "Phone number is required";
+      } else if (!/^[0-9]{10}$/.test(formData.phone)) {
+        newErrors.phone = "Enter a valid 10-digit phone number";
+      }
+      if (!formData.email.trim()) {
+        newErrors.email = "Email is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        newErrors.email = "Enter a valid email address";
+      }
+
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
     
 
   return (
@@ -46,11 +85,13 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     First Name *
                   </label>
                   <input
-                    type="text"
-                    name="firstName1"
-                    id="firstName1"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
-                  />
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.firstName ? "border-red-500" : "border-[#002D6B]"}`}
+                />
+                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -58,11 +99,13 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     Last Name *
                   </label>
                   <input
-                    type="text"
-                    name="firstName2"
-                    id="firstName2"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
-                  />
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.lastName ? "border-red-500" : "border-[#002D6B]"}`}
+                />
+                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -108,11 +151,13 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     Phone *
                   </label>
                   <input
-                    type="text"
-                    name="phone"
-                    id="phone"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
-                  />
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.phone ? "border-red-500" : "border-[#002D6B]"}`}
+                />
+                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -120,11 +165,13 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     Email *
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
-                  />
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.email ? "border-red-500" : "border-[#002D6B]"}`}
+                />
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -177,3 +224,127 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
 };
 
 export default MainContent;
+// import React, { useState } from "react";
+// import PicUpload from "../assets/upload-photo.jpg";
+// import { useNavigate } from 'react-router-dom';
+
+// const MainContent = ({ activeStep, onNextStep }) => {
+//   const navigate = useNavigate();
+//   const [formData, setFormData] = useState({
+//     firstName: "",
+//     lastName: "",
+//     phone: "",
+//     email: "",
+//   });
+
+//   const [errors, setErrors] = useState({});
+
+//   const validateForm = () => {
+//     let newErrors = {};
+
+//     if (!formData.firstName.trim()) {
+//       newErrors.firstName = "First Name is required";
+//     }
+//     if (!formData.lastName.trim()) {
+//       newErrors.lastName = "Last Name is required";
+//     }
+//     if (!formData.phone.trim()) {
+//       newErrors.phone = "Phone number is required";
+//     } else if (!/^[0-9]{10}$/.test(formData.phone)) {
+//       newErrors.phone = "Enter a valid 10-digit phone number";
+//     }
+//     if (!formData.email.trim()) {
+//       newErrors.email = "Email is required";
+//     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+//       newErrors.email = "Enter a valid email address";
+//     }
+
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleInputChange = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//     setErrors({ ...errors, [e.target.name]: "" });
+//   };
+
+//   const handleNextClick = () => {
+//     if (validateForm()) {
+//       navigate("/work-history");
+//       onNextStep();
+//     }
+//   };
+
+//   return (
+//     <main className="w-full bg-gray-100 min-h-screen">
+//       <div className="mx-4 sm:mx-10 md:mx-16 lg:mx-24 p-4 sm:p-6 md:p-12">
+//         <div className="flex flex-col gap-6">
+//           <h1 className="text-[#002D6B] text-2xl font-semibold">Personal Details</h1>
+//           <div className="flex flex-wrap gap-6">
+//           <div className="w-full sm:max-w-[750px]">
+//              <h1 className="text-[#002D6B] text-xl sm:text-2xl md:text-4xl font-semibold font-merriweather">
+//                Personal Details
+//              </h1>
+//            </div>
+//            <div className="flex flex-col items-center gap-3">
+//             <div className="flex flex-col w-full sm:max-w-[300px]">
+//               <label className="text-[#002D6B] font-semibold">First Name *</label>
+//               <input
+//                 type="text"
+//                 name="firstName"
+//                 value={formData.firstName}
+//                 onChange={handleInputChange}
+//                 className={`w-full border h-10 px-3 rounded ${errors.firstName ? "border-red-500" : "border-[#002D6B]"}`}
+//               />
+//               {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+//             </div>
+
+//             <div className="flex flex-col w-full sm:max-w-[300px]">
+//               <label className="text-[#002D6B] font-semibold">Last Name *</label>
+//               <input
+//                 type="text"
+//                 name="lastName"
+//                 value={formData.lastName}
+//                 onChange={handleInputChange}
+//                 className={`w-full border h-10 px-3 rounded ${errors.lastName ? "border-red-500" : "border-[#002D6B]"}`}
+//               />
+//               {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+//             </div>
+
+//             <div className="flex flex-col w-full sm:max-w-[300px]">
+//               <label className="text-[#002D6B] font-semibold">Phone *</label>
+//               <input
+//                 type="text"
+//                 name="phone"
+//                 value={formData.phone}
+//                 onChange={handleInputChange}
+//                 className={`w-full border h-10 px-3 rounded ${errors.phone ? "border-red-500" : "border-[#002D6B]"}`}
+//               />
+//               {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+//             </div>
+
+//             <div className="flex flex-col w-full sm:max-w-[300px]">
+//               <label className="text-[#002D6B] font-semibold">Email *</label>
+//               <input
+//                 type="email"
+//                 name="email"
+//                 value={formData.email}
+//                 onChange={handleInputChange}
+//                 className={`w-full border h-10 px-3 rounded ${errors.email ? "border-red-500" : "border-[#002D6B]"}`}
+//               />
+//               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+//             </div>
+//           </div>
+//           <button
+//             onClick={handleNextClick}
+//             className="bg-[#026A73] font-bold text-white py-2 px-6 rounded-full hover:opacity-90"
+//           >
+//             Next: Work History
+//           </button>
+//         </div>
+//       </div>
+//     </main>
+//   );
+// };
+
+// export default MainContent;
