@@ -39,13 +39,9 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
       }
       if (!formData.phone.trim()) {
         newErrors.phone = "Phone number is required";
-      } else if (!/^[0-9]{10}$/.test(formData.phone)) {
-        newErrors.phone = "Enter a valid 10-digit phone number";
       }
       if (!formData.email.trim()) {
         newErrors.email = "Email is required";
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        newErrors.email = "Enter a valid email address";
       }
 
       setErrors(newErrors);
@@ -59,7 +55,7 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
     
 
   return (
-    <main className="w-full bg-gray-100 min-h-screen">
+    <main className="w-full bg-gray-100 min-h-screen flex justify-center items-center">
       <div className="mx-4 sm:mx-10 md:mx-16 lg:mx-24 p-4 sm:p-6 md:p-12">
         <div className="flex flex-col gap-6">
           <div className="w-full sm:max-w-[750px]">
@@ -89,7 +85,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
-                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.firstName ? "border-red-500" : "border-[#002D6B]"}`}
+                  placeholder="e.g. Roheeth"
+                  className={`w-full text-[18px] border h-14 px-3 rounded focus:outline-none font-normal ${errors.firstName ? "border-red-500" : "border-[#002D6B]"}`}
                 />
                 {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
                 </div>
@@ -103,7 +100,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.lastName ? "border-red-500" : "border-[#002D6B]"}`}
+                  placeholder="e.g. Ragavendar"
+                  className={`w-full text-[18px] border h-14 px-3 rounded focus:outline-none font-normal ${errors.lastName ? "border-red-500" : "border-[#002D6B]"}`}
                 />
                 {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
                 </div>
@@ -116,11 +114,12 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     type="text"
                     name="city"
                     id="city"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    placeholder="e.g. chennai"
+                    className="w-full text-[18px] border border-[#002D6B] h-14 px-3 focus:outline-none font-normal focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                <div className="flex flex-col w-full sm:w-1/2 sm:flex-row gap-4 sm:gap-6">
                   <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[190px]">
                     <label htmlFor="country" className="mb-2">
                       Country
@@ -129,7 +128,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                       type="text"
                       name="country"
                       id="country"
-                      className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                      placeholder="e.g. India"
+                      className="w-full text-[18px] border border-[#002D6B] h-14 px-3 focus:outline-none font-normal focus:border-[#026A73] focus:border-2 rounded"
                     />
                   </div>
 
@@ -141,7 +141,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                       type="text"
                       name="pinCode"
                       id="pinCode"
-                      className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                      placeholder="e.g. 600028"
+                      className="w-full text-[18px] font-normal border border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                     />
                   </div>
                 </div>
@@ -155,7 +156,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.phone ? "border-red-500" : "border-[#002D6B]"}`}
+                  placeholder="e.g. 9876543210"
+                  className={`w-full text-[18px] font-normal border h-14 px-3 rounded focus:outline-none ${errors.phone ? "border-red-500" : "border-[#002D6B]"}`}
                 />
                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
                 </div>
@@ -167,9 +169,10 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                   <input
                   type="email"
                   name="email"
+                  placeholder="roheeth123@gmail.com"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full border h-10 px-3 rounded focus:outline-none ${errors.email ? "border-red-500" : "border-[#002D6B]"}`}
+                  className={`w-full text-[18px] font-normal border h-14 px-3 rounded focus:outline-none ${errors.email ? "border-red-500" : "border-[#002D6B]"}`}
                 />
                 {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 </div>
@@ -182,7 +185,7 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     type="url"
                     name="linkedin"
                     id="linkedin"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    className="w-full border border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
 
@@ -194,7 +197,7 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     type="url"
                     name="website"
                     id="website"
-                    className="w-full border border-[#002D6B] h-10 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    className="w-full border border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
               </div>

@@ -54,7 +54,7 @@ const Sidebar = ({ activeStep }) => {
             className="hover:text-[#FF3D3C] cursor-pointer transition-colors duration-300 flex items-center gap-2"
           >
             <div
-              className={`border-2 rounded-full px-2 py-1 text-[12px] font-bold ${
+              className={`border-2 rounded-full px-3 py-[6px] text-[12px] font-bold ${
                 activeStep === index ? "bg-yellow-600" : ""
               }`}
             >
