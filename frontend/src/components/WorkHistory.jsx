@@ -349,8 +349,8 @@ const WorkHistory = ({ activeStep, onNextStep, onPreviousStep }) => {
 
   // Handle Back Click
   const handleBackClick = () => {
-    navigate("/");
     onPreviousStep();
+    navigate("/");
   };
 
   // Handle adding a new work history entry
@@ -530,7 +530,7 @@ const WorkHistory = ({ activeStep, onNextStep, onPreviousStep }) => {
 
           <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap">
             <button
-              onClick={onPreviousStep}
+              onClick={handleBackClick}
               disabled={activeStep === 0}
               className="font-bold w-[150px] text-[#026A73] text-sm sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 rounded-full border-[#002D6B] text-[#002D6B]-full hover:bg-[#002D6B] hover:text-white transition"
             >

@@ -11,7 +11,7 @@ import MainContent from "./components/MainContent";
 
 const App = () => {
 
-  const [activeStep, setActiveStep] = useState(0); // Track the current active step
+  const [activeStep, setActiveStep] = useState(0);
 
   // Function to move to the next step
   const handleNextStep = () => {
@@ -46,10 +46,22 @@ const App = () => {
               onPreviousStep={handlePreviousStep}
               />
             } />
-            <Route path="/education" element={<Education />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/summary" element={<Summary />} />
-            <Route path="/finalize" element={<Finalize />} />
+            <Route path="/education" element={<Education 
+              activeStep={activeStep}
+              onNextStep={handleNextStep}
+              onPreviousStep={handlePreviousStep}/>} />
+
+            <Route path="/skills" element={<Skills 
+            activeStep={activeStep}
+            onNextStep={handleNextStep}
+            onPreviousStep={handlePreviousStep}/>} />
+
+            <Route path="/summary" element={<Summary 
+            activeStep={activeStep}
+            onNextStep={handleNextStep}
+            onPreviousStep={handlePreviousStep}/>} />
+
+            <Route path="/finalize" element={<Finalize activeStep={activeStep} onPreviousStep={handlePreviousStep}/>} />
           </Routes>
         </div>
       </div>
