@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import IconAdd from '../assets/icons/plus-icon.svg';
 
-
 const Education = ({ activeStep, onNextStep, onPreviousStep }) => {
     const navigate = useNavigate();
 
     const [selectedDegree, setSelectedDegree] = useState(null);
+
     const options = [
         { value: '', label: 'Select' },
         { value: 'January', label: 'January' },
@@ -97,15 +97,14 @@ const Education = ({ activeStep, onNextStep, onPreviousStep }) => {
     };
 
     const handleNextClick = () => {
-        navigate("/education");
-        console.log("BTN CLICKED", navigate);
         onNextStep();
+        navigate("/skills");
+
     };
 
     const handleBackClick = () => {
-        navigate("/");
-        console.log("BTN CLICKED", navigate);
-        onNextStep();
+        onPreviousStep(); // Update the step first
+        navigate("/work-history"); // Then navigate to the previous page
     };
 
     return (
@@ -213,7 +212,7 @@ const Education = ({ activeStep, onNextStep, onPreviousStep }) => {
 
                     <div className="flex justify-center mt-[30px]">
                         <button
-                            onClick={handleAddSkill}
+                            // onClick={handleAddSkill}
                             className="flex items-center gap-2 font-bold text-sm text-gray-400 sm:text-md hover:border-[3px] hover:border-[#002D6B] hover:py-2 px-6 sm:py-3 sm:px-8 rounded-full transition"
                         >
                             <img src={IconAdd} alt="" /> Add work experience
@@ -222,7 +221,7 @@ const Education = ({ activeStep, onNextStep, onPreviousStep }) => {
 
                     <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap">
                         <button
-                            onClick={onPreviousStep}
+                            onClick={handleBackClick}
                             disabled={activeStep === 0}
                             className="font-bold w-[150px] text-[#026A73] text-sm sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 rounded-full border-[#002D6B] text-[#002D6B]-full hover:bg-[#002D6B] hover:text-white transition"
                         >

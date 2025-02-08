@@ -55,10 +55,13 @@ import IconBold from '../assets/icons/bold-icon.svg';
 import IconItalic from '../assets/icons/italic-icon.svg';
 import IconUnderline from '../assets/icons/underlined-icon.svg';
 import IconList from '../assets/icons/list-icon.svg';
+import { useNavigate } from "react-router-dom";
 
-const Summary = () => {
+const Summary = ({ activeStep,onNextStep, onPreviousStep }) => {
   const textAreaRef = useRef(null);
   const [charCount, setCharCount] = useState(0);
+  const navigate = useNavigate();
+
 
   const handleInput = (e) => {
     const text = e.target.innerText;
@@ -72,6 +75,16 @@ const Summary = () => {
       sel.addRange(range);
     }
     setCharCount(e.target.innerText.length);
+  };
+
+  const handleNextClick = () => {
+    onNextStep();
+    navigate("/finalize");
+  };
+
+  const handleBackClick = () => {
+    onPreviousStep();
+    navigate("/skills");
   };
 
   return (
@@ -124,6 +137,22 @@ const Summary = () => {
             </button>
           </div>
         </div>
+        <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap">
+        <button
+            onClick={handleBackClick}
+            disabled={activeStep === 0}
+            className="font-bold text-sm text-[#002D6B] sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 rounded-full border-[#002D6B] text-[#002D6B]-full hover:bg-[#002D6B] hover:text-white transition"
+        >
+            Previous
+        </button>
+        <button
+            onClick={handleNextClick}
+            disabled={activeStep === 5}
+            className="bg-[#026A73] font-bold text-sm sm:text-md py-2 px-6 sm:py-3 sm:px-8-full rounded-full text-white hover:opacity-90 transition"
+        >
+            Next
+        </button>
+    </div>
       </div>
     </main>
   );

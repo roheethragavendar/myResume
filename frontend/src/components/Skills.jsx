@@ -39,15 +39,13 @@ const Skills = ({ activeStep, onNextStep, onPreviousStep }) => {
   };
 
   const handleNextClick = () => {
-    navigate("/education");
-    console.log("BTN CLICKED", navigate);
     onNextStep();
+    navigate("/summary");
   };
 
   const handleBackClick = () => {
-    navigate("/");
-    console.log("BTN CLICKED", navigate);
-    onNextStep();
+    onPreviousStep();
+    navigate("/education");
   };
   return (
     <main className="w-full bg-gray-100 min-h-screen flex">
@@ -169,7 +167,7 @@ const Skills = ({ activeStep, onNextStep, onPreviousStep }) => {
         </div>
         <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap">
         <button
-            onClick={onPreviousStep}
+            onClick={handleBackClick}
             disabled={activeStep === 0}
             className="font-bold text-sm text-[#002D6B] sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 rounded-full border-[#002D6B] text-[#002D6B]-full hover:bg-[#002D6B] hover:text-white transition"
         >
