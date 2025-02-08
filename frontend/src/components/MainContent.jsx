@@ -58,14 +58,14 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
     <main className="w-full bg-gray-100 min-h-screen flex justify-center items-center">
       <div className="mx-4 sm:mx-10 md:mx-16 lg:mx-24 p-4 sm:p-6 md:p-12">
         <div className="flex flex-col gap-6">
-          <div className="w-full sm:max-w-[750px]">
+          <div className="w-full sm:items-start sm:max-w-[750px] flex flex-col items-center">
             <h1 className="text-[#002D6B] text-xl sm:text-2xl md:text-4xl font-semibold font-merriweather">
               Personal Details
             </h1>
           </div>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
-              <div className="flex flex-col items-center gap-3">
+              <div className="w-full sm:w-1/2 flex flex-col items-center gap-3">
                 <img
                   src={PicUpload}
                   alt="Upload"
@@ -185,7 +185,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     type="url"
                     name="linkedin"
                     id="linkedin"
-                    className="w-full border border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    placeholder="linkedIn.com"
+                    className="w-full text-[18px] font-normal border border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
 
@@ -197,7 +198,8 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     type="url"
                     name="website"
                     id="website"
-                    className="w-full border border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
+                    placeholder="samplewebsite.com"
+                    className="w-full border text-[18px] font-normal border-[#002D6B] h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2 rounded"
                   />
                 </div>
               </div>
