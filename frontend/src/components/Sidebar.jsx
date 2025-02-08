@@ -15,9 +15,9 @@ const Sidebar = ({ activeStep }) => {
   ];
 
   return (
-    <aside className="sm:w-[20%] bg-[#092347] text-white sm:p-6 h-screen sm:h-screen fixed sm:relative top-0 left-0 sm:flex flex-col z-50">
+    <aside className="sm:w-[20%] bg-[#092347] text-white sm:p-6 h-auto sm:h-screen fixed top-0 left-0 sm:flex flex-col z-50">
       {/* Mobile Header */}
-      <div className="flex justify-between items-center bg-[#092347] px-4 py-3">
+      <div className="flex justify-between items-center gap-10 bg-[#092347] px-4 py-3">
         <h2 className="text-lg font-semibold">
           Your<span className="text-[#FF3D3C]">CV</span>Info
         </h2>

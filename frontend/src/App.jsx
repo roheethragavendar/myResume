@@ -31,7 +31,7 @@ const App = () => {
     <Router>
       <div className="flex">
         <Sidebar activeStep={activeStep}/>
-        <div className="flex-1">
+        <div className="flex-1 sm:ml-[20%]">
           <Routes>
             <Route path="/" element={
             <MainContent 
@@ -39,11 +39,13 @@ const App = () => {
               onNextStep={handleNextStep}
               onPreviousStep={handlePreviousStep}
             />} />
-            <Route path="/work-history" element={<WorkHistory
+            <Route path="/work-history" element={
+              <WorkHistory
               activeStep={activeStep}
               onNextStep={handleNextStep}
               onPreviousStep={handlePreviousStep}
-            />} />
+              />
+            } />
             <Route path="/education" element={<Education />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/summary" element={<Summary />} />
