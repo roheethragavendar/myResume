@@ -17,10 +17,10 @@ const Sidebar = ({ activeStep }) => {
   return (
     <aside className="sm:w-[20%] bg-[#092347] text-white sm:p-6 h-auto sm:h-screen fixed top-0 left-0 sm:flex flex-col z-50">
       {/* Mobile Header */}
-      <div className="flex justify-between items-center gap-10 bg-[#092347] px-4 py-3">
-        <h2 className="text-lg font-semibold">
+      <div className={`flex justify-between items-center gap-10 ${isMenuOpen ? "bg-[#092347]" : "bg-red-600"} px-4 py-3`}>
+        {isMenuOpen && <h2 className="text-lg font-semibold">
           Your<span className="text-[#FF3D3C]">CV</span>Info
-        </h2>
+        </h2>}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="sm:hidden text-white focus:outline-none"
