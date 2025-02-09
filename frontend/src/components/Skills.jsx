@@ -238,15 +238,15 @@ const Skills = ({ activeStep, onNextStep, onPreviousStep }) => {
   };
 
   const handleNextClick = () => {
+    onNextStep();
     navigate("/summary");
     console.log("BTN CLICKED", navigate);
-    onNextStep();
   };
 
   const handleBackClick = () => {
+    onPreviousStep();
     navigate("/education");
     // console.log("BTN CLICKED", navigate);
-    onNextStep();
   };
 
   const textAreaRef = useRef(null);
@@ -268,7 +268,7 @@ const Skills = ({ activeStep, onNextStep, onPreviousStep }) => {
   return (
     <main className="w-full bg-gray-100 min-h-screen flex">
       <div className="w-full mx-4 sm:mx-10 md:mx-16 lg:mx-24 p-4 sm:p-6 md:p-12">
-        <h1 className="text-left text-[#002D6B] text-2xl md:text-4xl font-semibold font-merriweather mb-6">
+        <h1 className="sm:text-left text-center text-[#002D6B] text-2xl md:text-4xl font-semibold font-merriweather mb-6">
           Skills
         </h1>
 
