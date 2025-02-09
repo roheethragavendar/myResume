@@ -1,56 +1,57 @@
-import React, {useState} from "react";
+import React, { useState, useRef } from "react";
 import PicUpload from "../assets/upload-photo.jpg";
 import { useNavigate } from 'react-router-dom'
 import { personalDetailsService } from "../services/resume";
 const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleNextClick = () => {
-      if (validateForm()) {
-        navigate("/work-history");
-        onNextStep();
-      }
-    };
-    
-    const Data = new FormData();
+  const handleNextClick = () => {
+    if (validateForm()) {
+      navigate("/work-history");
+      onNextStep();
+    }
+  };
 
-    const [formData, setFormData] = useState({
-      firstName: "",
-      lastName: "",
-      city:"",
-      country:"",
-      pinCode:"",
-      phone: "",
-      email: "",
-      linkedIn:"",
-      website:"",
-    });
+  const Data = new FormData();
 
-    const [userImage, setUserImage] = useState(PicUpload);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    city: "",
+    country: "",
+    pinCode: "",
+    phone: "",
+    email: "",
+    linkedIn: "",
+    website: "",
+    userImage: null,
+  });
+
+  const [userImage, setUserImage] = useState(PicUpload);
 
 
-    const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
-    const validateForm = () => {
-      let newErrors = {};
+  const validateForm = () => {
+    let newErrors = {};
 
-      if (!formData.firstName.trim()) {
-        newErrors.firstName = "First Name is required";
-      }
-      if (!formData.lastName.trim()) {
-        newErrors.lastName = "Last Name is required";
-      }
-      if (!formData.phone.trim()) {
-        newErrors.phone = "Phone number is required";
-      }
-      if (!formData.email.trim()) {
-        newErrors.email = "Email is required";
-      }
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First Name is required";
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last Name is required";
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    }
 
-      setErrors(newErrors);
-      return Object.keys(newErrors).length === 0;
-    };
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,28 +61,28 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
   const handleImageFieldChange = (e, setter, fieldName) => {
     const file = e.target.files[0];
     if (file.type === "image/png" || file.type === "image/jpeg") {
-        const imageURL = URL.createObjectURL(file);
-        setUserImage(imageURL); 
-        setFormData((prevData) => ({
-            ...prevData,
-            userImage: imageURL,
-        }));
+      const imageURL = URL.createObjectURL(file);
+      setUserImage(imageURL);
+      setFormData((prevData) => ({
+        ...prevData,
+        userImage: imageURL,
+      }));
     } else {
-      setUserImage(PicUpload); 
-        setFormData((prevData) => ({
-          ...prevData,
-          userImage: null,
+      setUserImage(PicUpload);
+      setFormData((prevData) => ({
+        ...prevData,
+        userImage: null,
       }));
     }
   }
-  
+
   const handleDeleteImage = () => {
-    setUserImage(PicUpload); 
+    setUserImage(PicUpload);
   };
 
-  const addpersonalDetails = async() => {
+  const addpersonalDetails = async () => {
     if (validateForm()) {
-      let { firstName, lastName, email, city, country, pinCode, website,linkedIn,phone } = formData;
+      let { firstName, lastName, email, city, country, pinCode, website, linkedIn, phone } = formData;
       Data.append('firstName', firstName);
       Data.append('lastName', lastName);
       Data.append('email', email);
@@ -91,18 +92,26 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
       Data.append('pinCode', pinCode);
       Data.append('linkedIn', linkedIn);
       Data.append('website', website);
-      if(userImage != null){
+      if (userImage != null) {
         Data.append('userImage', userImage);
-    }
-    try {
-      let response = await personalDetailsService(Data);
-      console.log("response", response);
-      handleNextClick();
-    } catch (error) {
-      console.error("Error submitting personal details:", error);
-    }
+      }
+      try {
+        let response = await personalDetailsService(Data);
+        console.log("response", response);
+        handleNextClick();
+      } catch (error) {
+        console.error("Error submitting personal details:", error);
+      }
     }
   }
+
+  const fileInputRef = useRef(null);
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); 
+    }
+  };
 
   return (
     <main className="w-full bg-gray-100 min-h-screen flex justify-center items-center">
@@ -115,44 +124,49 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
           </div>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
-                    <div className="relative w-full sm:w-1/2 flex flex-col items-center gap-3">
-                      <img
-                        src={userImage || PicUpload}
-                        alt="Upload"
-                        className="object-cover w-[40px] h-[40px] sm:w-full sm:h-full"
-                      />
-                         {userImage !== PicUpload && (
-                            <button
-                              onClick={handleDeleteImage}
-                              className="absolute top-0 right-0 bg-red-500 text-white text-xs p-1 rounded-full"
-                            >
-                              ✕
-                            </button>
-                          )}
-                           <input
-                          type="file"
-                          name="userImage"
-                          onChange={(e) => handleImageFieldChange(e, setUserImage, 'userImage')}
-                          accept='image/png, image/jpeg'
-                        />
-                      <p className="text-blue-900 text-sm sm:text-base cursor-pointer underline font-semibold">
-                        Upload photo
-                      </p>
-                    </div>
+              <div className="relative w-full sm:w-1/2 flex flex-col items-center gap-3">
+                <img
+                  src={userImage || PicUpload}
+                  alt="Upload"
+                  className="object-cover w-[200px] h-[200px] sm:w-full sm:h-full relative"
+                />
+                {userImage !== PicUpload && (
+                  <button
+                    onClick={handleDeleteImage}
+                    className="absolute top-0 right-0 bg-red-500 text-white text-[18px] py-2 px-[15px] rounded-full"
+                  >
+                    ✕
+                  </button>
+                )}
+                <input
+                  type="file"
+                  name="userImage"
+                  onChange={(e) => handleImageFieldChange(e, setUserImage, 'userImage')}
+                  accept="image/png, image/jpeg"
+                  ref={fileInputRef} // Ref to the file input
+                  style={{ display: "none" }} // Hide the input field
+                />
+                <p
+                  onClick={handleUploadClick} // Trigger file input on text click
+                  className="text-blue-900 text-sm sm:text-base cursor-pointer underline font-semibold"
+                >
+                  Upload photo
+                </p>
+              </div>
               <div className="flex flex-wrap gap-4 sm:gap-6 gap-y-6 w-full sm:w-auto">
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
                   <label htmlFor="firstName1" className="mb-2">
                     First Name *
                   </label>
                   <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Roheeth"
-                  className={`w-full text-[18px] border h-14 px-3 rounded focus:outline-none font-normal ${errors.firstName ? "border-red-500" : "border-[#002D6B]"}`}
-                />
-                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Roheeth"
+                    className={`w-full text-[18px] border h-14 px-3 rounded focus:outline-none font-normal ${errors.firstName ? "border-red-500" : "border-[#002D6B]"}`}
+                  />
+                  {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -160,14 +174,14 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     Last Name *
                   </label>
                   <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Ragavendar"
-                  className={`w-full text-[18px] border h-14 px-3 rounded focus:outline-none font-normal ${errors.lastName ? "border-red-500" : "border-[#002D6B]"}`}
-                />
-                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Ragavendar"
+                    className={`w-full text-[18px] border h-14 px-3 rounded focus:outline-none font-normal ${errors.lastName ? "border-red-500" : "border-[#002D6B]"}`}
+                  />
+                  {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -222,14 +236,14 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     Phone *
                   </label>
                   <input
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="e.g. 9876543210"
-                  className={`w-full text-[18px] font-normal border h-14 px-3 rounded focus:outline-none ${errors.phone ? "border-red-500" : "border-[#002D6B]"}`}
-                />
-                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                    type="text"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="e.g. 9876543210"
+                    className={`w-full text-[18px] font-normal border h-14 px-3 rounded focus:outline-none ${errors.phone ? "border-red-500" : "border-[#002D6B]"}`}
+                  />
+                  {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
@@ -237,14 +251,14 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                     Email *
                   </label>
                   <input
-                  type="email"
-                  name="email"
-                  placeholder="roheeth123@gmail.com"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`w-full text-[18px] font-normal border h-14 px-3 rounded focus:outline-none ${errors.email ? "border-red-500" : "border-[#002D6B]"}`}
-                />
-                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                    type="email"
+                    name="email"
+                    placeholder="roheeth123@gmail.com"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full text-[18px] font-normal border h-14 px-3 rounded focus:outline-none ${errors.email ? "border-red-500" : "border-[#002D6B]"}`}
+                  />
+                  {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 </div>
 
                 <div className="flex flex-col text-[#002D6B] font-semibold text-sm sm:text-base uppercase w-full sm:max-w-[300px] lg:max-w-[400px]">
