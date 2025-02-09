@@ -103,8 +103,8 @@ const Education = ({ activeStep, onNextStep, onPreviousStep }) => {
     };
 
     const handleBackClick = () => {
-        onPreviousStep(); // Update the step first
-        navigate("/work-history"); // Then navigate to the previous page
+        onPreviousStep(); 
+        navigate("/work-history"); 
     };
 
     return (
