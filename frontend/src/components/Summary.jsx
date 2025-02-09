@@ -24,17 +24,17 @@
 //                     <button onClick={() => document.execCommand("bold")} className="w-4">
 //                         <b><img src={IconBold} alt="" /></b>
 //                     </button>
-                    
+
 //                     {/* Italic */}
 //                     <button onClick={() => document.execCommand("italic")} className="text-xl text-[#002D6B]">
 //                         <i><img src={IconItalic} alt="" /></i>
 //                     </button>
-                    
+
 //                     {/* Underline */}
 //                     <button onClick={() => document.execCommand("underline")} className="text-xl text-[#002D6B]">
 //                         <u><img src={IconUnderline} alt="" /></u>
 //                     </button>
-                    
+
 //                     {/* Unordered List */}
 //                     <button onClick={() => document.execCommand("insertUnorderedList")} className="text-xl text-[#002D6B]">
 //                         <ul className="list-disc">
@@ -57,14 +57,14 @@ import IconUnderline from '../assets/icons/underlined-icon.svg';
 import IconList from '../assets/icons/list-icon.svg';
 import { useNavigate } from "react-router-dom";
 
-const Summary = ({ activeStep,onNextStep, onPreviousStep }) => {
+const Summary = ({ activeStep, onNextStep, onPreviousStep }) => {
   const textAreaRef = useRef(null);
   const [charCount, setCharCount] = useState(0);
   const navigate = useNavigate();
 
 
   const handleInput = (e) => {
-    const text = e.target.innerText;
+    const text = e.target.innerText.trim();
     if (text.length > 500) {
       e.target.innerText = text.substring(0, 500); // Trim excess characters
       const range = document.createRange();
@@ -74,13 +74,13 @@ const Summary = ({ activeStep,onNextStep, onPreviousStep }) => {
       sel.removeAllRanges();
       sel.addRange(range);
     }
-    setCharCount(e.target.innerText.length);
+    setCharCount(e.target.innerText.trim().length);
   };
 
-  const handleNextClick = () => {
-    onNextStep();
-    navigate("/finalize");
-  };
+  // const handleNextClick = () => {
+  //   onNextStep();
+  //   navigate("/finalize");
+  // };
 
   const handleBackClick = () => {
     onPreviousStep();
@@ -101,9 +101,9 @@ const Summary = ({ activeStep,onNextStep, onPreviousStep }) => {
             contentEditable={true}
             placeholder="Add your skills here"
             onInput={handleInput}
-            style={{ minHeight: '400px',maxHeight: '400px', paddingBottom: '60px', overflow: 'auto' }}
+            style={{ minHeight: '400px', maxHeight: '400px', paddingBottom: '60px', overflow: 'auto', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
           />
-          <p className="text-sm text-gray-500 text-right w-full">
+          <p className="text-sm text-gray-500 text-right w-[150px] absolute bottom-14 right-0 p-4">
             {charCount}/500 characters
           </p>
           {/* Toolbar */}
@@ -138,21 +138,21 @@ const Summary = ({ activeStep,onNextStep, onPreviousStep }) => {
           </div>
         </div>
         <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap">
-        <button
+          <button
             onClick={handleBackClick}
             disabled={activeStep === 0}
-            className="font-bold text-sm text-[#002D6B] sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 rounded-full border-[#002D6B] text-[#002D6B]-full hover:bg-[#002D6B] hover:text-white transition"
-        >
+            className="font-bold text-sm text-[#002D6B] sm:text-md border-2 py-2 px-6 sm:py-3 sm:px-8 rounded-full border-[#002D6B] text-[#002D6B]-full hover:bg-[#002D6B] hover:text-white transition cursor-pointer"
+          >
             Previous
-        </button>
-        <button
+          </button>
+          {/* <button
             onClick={handleNextClick}
             disabled={activeStep === 5}
             className="bg-[#026A73] font-bold text-sm sm:text-md py-2 px-6 sm:py-3 sm:px-8-full rounded-full text-white hover:opacity-90 transition"
-        >
+          >
             Next
-        </button>
-    </div>
+          </button> */}
+        </div>
       </div>
     </main>
   );

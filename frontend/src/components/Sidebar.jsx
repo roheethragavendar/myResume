@@ -11,16 +11,17 @@ const Sidebar = ({ activeStep }) => {
     { label: "Education", path: "/education" },
     { label: "Skills", path: "/skills" },
     { label: "Summary", path: "/summary" },
-    { label: "Finalize", path: "/finalize" },
   ];
 
   return (
     <aside className="sm:w-[20%] bg-[#092347] text-white sm:p-6 h-auto sm:h-screen fixed top-0 left-0 sm:flex flex-col z-50">
       {/* Mobile Header */}
-      <div className={`flex justify-between items-center gap-10 ${isMenuOpen ? "bg-[#092347]" : "bg-red-600"} px-4 py-3`}>
-        {isMenuOpen && <h2 className="text-lg font-semibold">
-          Your<span className="text-[#FF3D3C]">CV</span>Info
-        </h2>}
+      <div className={`flex justify-between items-center gap-10 px-4 py-3 ${isMenuOpen ? "bg-[#092347]" : "bg-gray-100 sm:bg-[#092347]"}`}>
+        {(isMenuOpen || window.innerWidth >= 640) ? 
+          <h2 className="text-lg font-semibold">
+            Your<span className="text-[#FF3D3C]">CV</span>Info
+          </h2>
+         : ''}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="sm:hidden text-white focus:outline-none"
@@ -36,17 +37,19 @@ const Sidebar = ({ activeStep }) => {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
+              stroke={!isMenuOpen ? "#092347" : "currentColor"} // Change stroke color based on `isMenuOpen`
+              fill={!isMenuOpen ? "#092347" : "none"} // Change fill color based on `isMenuOpen`
               d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
             />
           </svg>
         </button>
       </div>
 
+
       {/* Menu */}
       <ul
-        className={`space-y-4 sm:block ${
-          isMenuOpen ? "block" : "hidden"
-        } transition-all duration-300 bg-[#092347] sm:bg-transparent p-4 sm:p-0`}
+        className={`space-y-4 sm:block ${isMenuOpen ? "block" : "hidden"
+          } transition-all duration-300 bg-[#092347] sm:bg-transparent p-4 sm:p-0`}
       >
         {stepperList.map((item, index) => (
           <li
@@ -54,9 +57,8 @@ const Sidebar = ({ activeStep }) => {
             className="hover:text-[#FF3D3C] cursor-pointer transition-colors duration-300 flex items-center gap-2"
           >
             <div
-              className={`border-2 rounded-full px-3 py-[6px] text-[12px] font-bold ${
-                activeStep === index ? "bg-yellow-600" : ""
-              }`}
+              className={`border-2 rounded-full px-[15px] py-[6px] text-[18px] font-bold ${activeStep === index ? "bg-yellow-400" : ""
+                }`}
             >
               {index + 1}
             </div>
