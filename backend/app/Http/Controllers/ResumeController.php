@@ -29,7 +29,7 @@ class ResumeController extends Controller
             'pinCode' => 'nullable|string|max:20',
             'linkedIn' => 'nullable|url',
             'website' => 'nullable|url',
-            'userImage' => 'nullable|file|mimes:jpeg,png,jpg'
+            'userImage' => 'nullable'
         ];
     
         $validate = Validator::make($request->all(), $rules);
@@ -63,6 +63,8 @@ class ResumeController extends Controller
             } else {
                 $data['userImage'] = null;
             }
+
+            $existingUser = $this->personalDetailsTableConnection->where('email', $request->email)->exists();
     
             $create = $this->personalDetailsTableConnection->insert($data);
     
@@ -79,5 +81,44 @@ class ResumeController extends Controller
             ], 500);
         }
     }
+
+    public function getPersonalDetails(Request $request)
+{
+    $rules = [
+        'id' => 'required|integer|exists:resume.personaldetails,id'
+    ];
+
+    $validate = Validator::make($request->all(), $rules);
+
+    if ($validate->fails()) {
+        return response()->json([
+            "status" => "error",
+            "message" => $validate->errors()
+        ], 422);
+    }
+
+    try {
+        $personalDetails = $this->personalDetailsTableConnection->where('id', $request->id)->first();
+
+        if (!$personalDetails) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Personal details not found."
+            ], 404);
+        }
+
+        return response()->json([
+            "status" => "success",
+            "data" => $personalDetails
+        ], 200);
+        
+    } catch (\Throwable $th) {
+        return response()->json([
+            "status" => "error",
+            "message" => $th->getMessage()
+        ], 500);
+    }
+}
+
     
 }
