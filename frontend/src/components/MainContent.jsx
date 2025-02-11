@@ -135,7 +135,7 @@ const MainContent = ({ activeStep, onNextStep, onPreviousStep }) => {
                       <img
                         src={userImage || PicUpload}
                         alt="Upload"
-                        className="object-cover w-[40px] h-[40px] sm:w-full sm:h-full"
+                        className="object-cover w-[200px] h-[200px] sm:w-full sm:h-auto"
                       />
                          {userImage !== PicUpload && (
                             <button

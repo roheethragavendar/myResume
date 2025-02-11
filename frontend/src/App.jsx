@@ -7,6 +7,7 @@ import Skills from "./components/Skills";
 import Summary from "./components/Summary";
 import Finalize from "./components/Finalize";
 import MainContent from "./components/MainContent";
+import Preview from "./components/Preview";
 import { FormProvider } from "./context/FormContext";// Import Form Context Provider
 
 const App = () => {
@@ -83,12 +84,13 @@ const App = () => {
                   />
                 }
               />
-              <Route
+              {/* <Route
                 path="/finalize"
                 element={
                   <Finalize activeStep={activeStep} onPreviousStep={handlePreviousStep} />
                 }
-              />
+              /> */}
+              <Route path="/preview" element={<Preview />} />
             </Routes>
           </div>
         </div>
