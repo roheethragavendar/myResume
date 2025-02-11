@@ -1075,8 +1075,8 @@ const Skills = ({ activeStep, onNextStep, onPreviousStep }) => {
             </div>
           )}
 
-          {activeSkill === "skill2" && (
-            <div className="w-full max-w-lg p-4 rounded-lg outline-none border-0 focus:outline-none focus:ring-2 focus:ring-[#026A73] sm:flex sm:flex-col sm:items-center sm:max-w-full min-h-[400px]">
+          {/* {activeSkill === "skill2" && (
+            <div className="w-full max-w-lg p-4 rounded-lg outline-none border-0 focus:outline-none focus:ring-2 focus:ring-[#026A73] sm:flex sm:flex-col sm:items-center sm:max-w-full min-h-[400px] max-h-[400px] overflow-y-auto">
               {skills.map((skill) => (
                 <div key={skill.id} className="flex items-center justify-center space-x-4 mb-4">
                   <div className="flex items-center space-x-1">
@@ -1115,7 +1115,49 @@ const Skills = ({ activeStep, onNextStep, onPreviousStep }) => {
                 </button>
               </div>
             </div>
+          )} */}
+          {activeSkill === "skill2" && (
+            <div className="w-full p-4  rounded-lg min-h-[400px] sm:min-h-[400px] flex flex-col justify-start items-center sm:max-w-full">
+              <div className="w-full max-w-[600px] space-y-4">
+                {skills.map((skill) => (
+                  <div key={skill.id} className="flex items-center justify-between space-x-2">
+                    <div className="flex items-center space-x-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          onClick={() => handleRatingChange(skill.id, star)}
+                          className={`text-2xl ${star <= skill.rating ? "text-[#002D6B]" : "text-gray-400"}`}
+                        >
+                          ★
+                        </button>
+                      ))}
+                    </div>
+                    <input
+                      type="text"
+                      value={skill.feedback}
+                      onChange={(e) => handleFeedbackChange(skill.id, e.target.value)}
+                      placeholder="Enter your feedback"
+                      className="flex-1 border border-[#002D6B] w-full h-10 sm:h-14 px-3 focus:outline-none focus:border-[#026A73] focus:border-2"
+                    />
+                    {skills.length > 1 && (
+                      <div className="cursor-pointer" onClick={() => handleDelete(skill.id)}>
+                        <img src={IconDelete} alt="Delete" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={handleAddSkill}
+                className="flex items-center gap-2 font-bold text-sm text-gray-400 mt-6 hover:border-2 hover:border-[#002D6B] hover:py-2 px-6 py-3 rounded-full transition"
+              >
+                <img src={IconAdd} alt="Add" />
+                Add More
+              </button>
+            </div>
           )}
+
         </div>
         <div className="flex gap-4 justify-between sm:justify-end mt-6 flex-wrap ">
           <button
